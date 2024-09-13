@@ -1,5 +1,6 @@
 package com.crud.back_end.controller;
 
+import com.crud.back_end.exeption.UserNotFoundException;
 import com.crud.back_end.model.User;
 import com.crud.back_end.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +26,11 @@ public class UserController {
     List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    @GetMapping("/user/{id}")
+    User getUserById(@PathVariable Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
 }
